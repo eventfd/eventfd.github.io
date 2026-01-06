@@ -1,0 +1,15 @@
+{
+    "hs": "Haskell",
+    "c": "C",
+    "cpp": "C++",
+    "go": "Go",
+    "bash": "Bash Shell",
+    "nasm": "NASM x86",
+    "gas": "GNU Assembler",
+    "http": "HTTP Request",
+    "json": "JSON",
+    "llvm": "LLVM",
+    "rust": "Rust",
+    "rs": "Rust",
+    "zig": "Zig"
+}

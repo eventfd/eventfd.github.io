@@ -1,0 +1,7 @@
+{{- if eq .Attributes.type "struct" -}}
+  {{- $data := transform.Unmarshal .Inner -}}
+  {{- partial "struct-visualizer.html" $data -}}
+{{- else -}}
+  {{- /* Standard JSON highlighting */ -}}
+  {{- partial "render-codeblock-base.html" . -}}
+{{- end -}}

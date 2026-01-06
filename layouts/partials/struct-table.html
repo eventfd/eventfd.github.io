@@ -1,0 +1,39 @@
+{{/* 1. Calculate global max offset on first call */}}
+{{ if not (.Scratch.Get "max") }}
+  {{ .Scratch.Set "max" 0 }}
+  {{ partial "get-max-offset.html" . }}
+{{ end }}
+
+{{/* 2. Calculate padding length once */}}
+{{ $padding := len (printf "%x" (.Scratch.Get "max")) }}
+
+<table class="struct-table">
+  {{- with .name -}}
+    <caption><code>{{ . }}</code></caption>
+  {{- end -}}
+  <thead>
+    <tr>
+      <th class="col-offset">Offset</th>
+      <th class="col-type">Type</th>
+      <th class="col-name">Field</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ $opts := dict "lineNos" "false" "hl_inline" "true" "wrapperClass" "highlight" }}
+    {{- range .fields -}}
+        <tr>
+            {{/* Display offset in hex, left-padded with 0s, no 0x prefix */}}
+            <td class="cell-offset"><code>{{ printf "%0*X" $padding (int .offset) }}</code></td>
+            <td class="cell-type"><span class="type-badge">{{ transform.Highlight (.type) "c" $opts }}</span></td>
+            {{ if .fields }}
+                {{/* Recursive call for nested fields */}}
+                <td class="cell-nested" style="padding-left: 20px;">
+                    {{ partial "struct-table.html" (dict "name" .name "fields" .fields "Scratch" $.Scratch) }}
+                </td>
+            {{ else }}
+                <td class="cell-name"><code>{{ .name }}</code></td>
+            {{ end }}
+        </tr>
+    {{- end -}}
+  </tbody>
+</table>

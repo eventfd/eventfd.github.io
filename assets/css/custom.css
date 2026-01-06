@@ -1,0 +1,195 @@
+:root {
+    --font-mono: 'Fira Code VF';
+    --font-body: 'Open Sans';
+    --code-padding: 1rem;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/fonts/FiraCode-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/fonts/FiraCode-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/fonts/FiraCode-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/fonts/FiraCode-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/fonts/FiraCode-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Code VF';
+    src: url('/fonts/FiraCode-VF.woff2') format(woff2) tech(variations);
+    font-weight: 300 700;
+    font-style: normal;
+}
+
+pre,
+code {
+    font-feature-settings: "zero", "onum", "ss05", "cv25", "cv26", "cv27", "cv28", "cv29", "cv30", "cv31";
+    font-weight: 450;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
+
+.code-block {
+  /* overflow: hidden; */
+  box-shadow: 0 5px 10px rgba(180, 180, 180, 0.2);
+  margin: 1.5rem 0;
+  background-color: #1e1e1e; /* Match your code theme background */
+}
+
+.code-header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  padding: 12px 15px;
+  height: 2.1rem;
+  background: light-dark(#e2e2e2, #2d2d2d);
+  border-bottom: 1px solid light-dark(#d2d2d2, #3d3d3d);
+}
+
+.highlight pre {
+  /* overflow: auto; */
+  min-width: 200px;
+  scrollbar-width: thin;
+  scrollbar-color: light-dark(#4f4f4f, #555555) #e0e0e0;
+  max-height: 11.6lh;
+}
+
+.macos-buttons {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.close { background: #ff5f56; }
+.dot.minimize { background: #ffbd2e; }
+.dot.expand { background: #27c93f; }
+
+.code-lang {
+  /* color: #888; */
+  font-family: 'Fira Code';
+  font-size: 0.85rem;
+  /* text-transform: uppercase; */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Adjust Hugo's default code spacing */
+.code-block pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.copy-code-button {
+  background-color: var(--background);
+  font-family: var(--font-mono);
+  padding: 0 6px;
+  /* font-size: 0.7rem; */
+  /* border-radius: var(--copy-code-button-border-radius); */
+  position: absolute;
+  background-color: transparent;
+  top: auto;
+  right: 10px;
+  z-index: 1;
+  outline: none;
+  display: block;
+  border: none;
+  color: light-dark(#1f1f1f, #e0e0e0);
+  /* border: 1px solid var(--code-border); */
+}
+
+.light {
+  ::selection {
+    color: dodgerblue;
+    background-color: azure;
+  }
+}
+
+.dark {
+  ::selection {
+    color: #cdcdcd;
+    background-color: #444;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    color: #cdcdcd;
+    background-color: #444;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  ::selection {
+    color: dodgerblue;
+    background-color: azure;
+  }
+}
+
+.disabled {
+  opacity: 0.4;
+  filter: grayscale(100%);
+  pointer-events: none;
+  cursor: not-allowed;
+  outline: none;
+}
+
+/* --- Struct --- */
+
+.struct-table {
+  code {
+    background-color: transparent;
+  }
+
+  caption {
+    background-color: #e0e0e0;
+  }
+
+  td {
+    font-family: var(--font-mono);
+  }
+
+  .cell-nested {
+      padding: 0 !important; /* Remove padding to let nested table flush */
+  }
+
+  .cell-nested .struct-table {
+      margin: 0;
+      border: none;
+      background-color: #fafbfc; /* Subtle contrast for nested levels */
+  }
+}

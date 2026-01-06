@@ -1,0 +1,24 @@
+{{- $csv := transform.Unmarshal .Inner -}}
+<table >
+    {{- with .Attributes.title -}}
+        <caption>{{ . }}</caption>
+    {{- end -}}
+    <thead>
+        {{- with index $csv 0 }}
+        <tr>
+            {{- range . }}
+            <th>{{ . }}</th>
+            {{- end }}
+        </tr>
+        {{- end }}
+    </thead>
+    <tbody>
+        {{- range seq 1 (sub (len $csv) 1) }}
+        <tr>
+            {{- range index $csv . }}
+            <td>{{ . }}</td>
+            {{- end }}
+        </tr>
+        {{- end }}
+    </tbody>
+</table>

@@ -1,0 +1,10 @@
+{{/* Initialize or update the max value in Scratch */}}
+{{ range .fields }}
+  {{ $val := int .offset }}
+  {{ if gt $val ($.Scratch.Get "max") }}
+    {{ $.Scratch.Set "max" $val }}
+  {{ end }}
+  {{ if .fields }}
+    {{ partial "get-max-offset.html" (dict "fields" .fields "Scratch" $.Scratch) }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,70 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "eventfd's log"
+theme = "typo"
+
+[params]
+description = "eventfd"
+disableSocialMeta = true
+theme = "auto"
+colorPalette = "default"
+singleDateFormat = "2 Jan 2006"
+hideHeader = false
+homeIntroTitle = "Hi!"
+homeIntroContent = """
+I am a Software Engineer with a strong foundation in computer science and a passion for solving problems.
+
+I am interested in a range of topics, including algorithms, compiler design and operating systems.
+"""
+# Collection to display on home
+homeCollectionTitle = "Recent Posts"
+homeCollection = "posts"
+
+# Lists parameters
+paginationSize = 5
+listSummaries = true
+listDateFormat = "2 Jan 2006"
+
+# Breadcrumbs
+[params.breadcrumbs]
+enabled = true
+showCurrentPage = true
+home = "~"
+
+# Social icons
+# [[params.social]]
+# name = "linkedin"
+# url = "https://www.linkedin.com/in/user/"
+#
+# [[params.social]]
+# name = "medium"
+# url = "https://medium.com/@user"
+#
+# [[params.social]]
+# name = "github"
+# url = "https://github.com/user"
+
+# Main menu pages
+
+[[params.menu]]
+name = "posts"
+url = "/posts"
+
+[[params.menu]]
+name = "about"
+url = "/about"
+
+# Syntax highlight on code blocks
+[markup]
+    [markup.highlight]
+        noClasses = false
+        lineNos = true
+        lineNumbersInTable = false
+        guessSyntax = true
+    [markup.goldmark.parser.attribute]
+        block = true
+    [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+            block = [['\[', '\]'], ['$$', '$$']]
+            inline = [['\(', '\)'], ['$', '$']]
