@@ -61,7 +61,7 @@ Now we apply fold to the new set of values:
 
 | $i$ | $s_i$ | $rv_i$ |
 | --- | --- | --- |
-| $0$ | $f_0$ | $g_0$ |
+| $0$ | $g_0$ | $f_0$ |
 | $1$ | $g(s_0, e_0)$ | $f(rv_0, s_0)$ |
 | $2$ | $g(s_1, e_1)$ | $f(rv_1, s_1)$ |
 |$\cdots$ | $\cdots$ | $\cdots$ |
@@ -72,7 +72,7 @@ Observe that $rv_i$ is lagging behind $s_i$ as $s_i$ depends on $e_{i-1}$ wherea
 
 | $i$ | $s_i$ | $rv_{i+1}$ |
 | --- | --- | --- |
-| $0$ | $f_0$ | $f(rv_0, s_0)$ |
+| $0$ | $g_0$ | $f(rv_0, s_0)$ |
 | $1$ | $g(s_0, e_0)$ | $f(rv_1, s_1)$ |
 | $2$ | $g(s_1, e_1)$ | $f(rv_2, s_2)$ |
 |$\cdots$ | $\cdots$ | $\cdots$ |
