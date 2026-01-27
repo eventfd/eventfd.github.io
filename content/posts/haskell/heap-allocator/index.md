@@ -1,10 +1,10 @@
 +++
-title = "Haskell Memory Management - Introduction"
+title = "GHC Heap Layout, Part 1: Addressing Blocks and Metadata"
 date = "2026-01-26"
 summary = "Introduction to Haskell's Block Allocator"
 tags = ["haskell"]
 readTime = true
-articles = ["Haskell Memory Management"]
+articles = ["GHC Heap Layout, Part 1: Addressing Blocks and Metadata"]
 +++
 
 ### Problem Statement
