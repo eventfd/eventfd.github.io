@@ -3,6 +3,9 @@ languageCode = "en-us"
 title = "eventfd's log"
 theme = "typo"
 
+[taxonomies]
+article = "articles"
+
 [params]
 description = "eventfd"
 disableSocialMeta = true
@@ -49,6 +52,10 @@ home = "~"
 [[params.menu]]
 name = "posts"
 url = "/posts"
+
+[[params.menu]]
+name = "articles"
+url = "/articles"
 
 [[params.menu]]
 name = "about"
