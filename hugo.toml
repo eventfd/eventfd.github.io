@@ -3,9 +3,6 @@ languageCode = "en-us"
 title = "eventfd's log"
 theme = "typo"
 
-[taxonomies]
-article = "articles"
-
 [params]
 description = "eventfd"
 disableSocialMeta = true
@@ -36,26 +33,18 @@ home = "~"
 
 # Social icons
 # [[params.social]]
-# name = "linkedin"
-# url = "https://www.linkedin.com/in/user/"
-#
-# [[params.social]]
-# name = "medium"
-# url = "https://medium.com/@user"
-#
-# [[params.social]]
 # name = "github"
 # url = "https://github.com/user"
 
 # Main menu pages
 
 [[params.menu]]
-name = "posts"
-url = "/posts"
-
-[[params.menu]]
 name = "articles"
 url = "/articles"
+
+[[params.menu]]
+name = "posts"
+url = "/posts"
 
 [[params.menu]]
 name = "about"
