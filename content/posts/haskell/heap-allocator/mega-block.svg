@@ -6,10 +6,10 @@
         <style type="text/css">
             @import url(https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500);
         </style>
-        <style>
-        .monospaced {
-            font-family: 'Source Code Pro';
-        }
+        <style type="text/css">
+            .monospaced {
+                font-family: 'Source Code Pro';
+            }
         </style>
     </defs>
     <rect fill="#ffffff" style="fill: rgb(255, 255, 255);" width="100%" height="100%" x="0" y="0" />
@@ -22,12 +22,52 @@
                             style="fill: rgb(255, 230, 204); stroke: rgb(215, 155, 0);" stroke="#d79b00"
                             pointer-events="all" />
                     </g>
+                    <g>
+                        <g>
+                            <switch>
+                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none"
+                                    width="100%" height="100%"
+                                    requiredExtensions="http://www.w3.org/1998/Math/MathML" class="monospaced">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" class="monospaced"
+                                        style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 38px; height: 1px; padding-top: 110px; margin-left: 9px;">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <msub>
+                                                <mi>M</mi>
+                                                <mn>0</mn>
+                                            </msub>
+                                        </math>
+                                    </div>
+                                </foreignObject><text x="28" y="114" fill="light-dark(#000000, #ffffff)"
+                                    font-family="'Source Code Pro'" font-size="12px" text-anchor="middle">M0</text>
+                            </switch>
+                        </g>
+                    </g>
                 </g>
                 <g data-cell-id="UqK767taGGi2Bo0WxftI-2">
                     <g transform="translate(0.5,0.5)">
                         <rect x="48" y="70" width="40" height="80" fill="#ffe6cc"
                             style="fill: rgb(255, 230, 204); stroke: rgb(215, 155, 0);" stroke="#d79b00"
                             pointer-events="all" />
+                    </g>
+                    <g>
+                        <g>
+                            <switch>
+                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none"
+                                    width="100%" height="100%"
+                                    requiredExtensions="http://www.w3.org/1998/Math/MathML" class="monospaced">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" class="monospaced"
+                                        style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 38px; height: 1px; padding-top: 110px; margin-left: 49px;">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <msub>
+                                                <mi>M</mi>
+                                                <mn>1</mn>
+                                            </msub>
+                                        </math>
+                                    </div>
+                                </foreignObject><text x="68" y="114" fill="light-dark(#000000, #ffffff)"
+                                    font-family="'Source Code Pro'" font-size="12px" text-anchor="middle">M1</text>
+                            </switch>
+                        </g>
                     </g>
                 </g>
                 <g data-cell-id="UqK767taGGi2Bo0WxftI-3">
@@ -36,12 +76,52 @@
                             style="fill: rgb(255, 230, 204); stroke: rgb(215, 155, 0);" stroke="#d79b00"
                             pointer-events="all" />
                     </g>
+                    <g>
+                        <g>
+                            <switch>
+                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none"
+                                    width="100%" height="100%"
+                                    requiredExtensions="http://www.w3.org/1998/Math/MathML" class="monospaced">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" class="monospaced"
+                                        style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 38px; height: 1px; padding-top: 110px; margin-left: 89px;">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <msub>
+                                                <mi>M</mi>
+                                                <mn>2</mn>
+                                            </msub>
+                                        </math>
+                                    </div>
+                                </foreignObject><text x="108" y="114" fill="light-dark(#000000, #ffffff)"
+                                    font-family="'Source Code Pro'" font-size="12px" text-anchor="middle">M2</text>
+                            </switch>
+                        </g>
+                    </g>
                 </g>
                 <g data-cell-id="UqK767taGGi2Bo0WxftI-4">
                     <g transform="translate(0.5,0.5)">
                         <rect x="128" y="70" width="40" height="80" fill="#ffe6cc"
                             style="fill: rgb(255, 230, 204); stroke: rgb(215, 155, 0);" stroke="#d79b00"
                             pointer-events="all" />
+                    </g>
+                    <g>
+                        <g>
+                            <switch>
+                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none"
+                                    width="100%" height="100%"
+                                    requiredExtensions="http://www.w3.org/1998/Math/MathML" class="monospaced">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" class="monospaced"
+                                        style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 38px; height: 1px; padding-top: 110px; margin-left: 129px;">
+                                        <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <msub>
+                                                <mi>M</mi>
+                                                <mn>3</mn>
+                                            </msub>
+                                        </math>
+                                    </div>
+                                </foreignObject><text x="148" y="114" fill="light-dark(#000000, #ffffff)"
+                                    font-family="'Source Code Pro'" font-size="12px" text-anchor="middle">M3</text>
+                            </switch>
+                        </g>
                     </g>
                 </g>
                 <g data-cell-id="UqK767taGGi2Bo0WxftI-5">
@@ -314,11 +394,11 @@
                                     width="100%" height="100%" requiredExtensions="http://www.w3.org/1998/Math/MathML" class="monospaced">
                                     <div xmlns="http://www.w3.org/1999/xhtml"
                                         style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 25px; margin-left: 279px;">
-                                        <div
-                                            style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div
-                                                style="display: inline-block; font-size: 12px; font-family: 'Source Code Pro'; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                                <font>Data Blocks</font>
+                                        <div class="monospaced"
+                                            type="text/css" style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                                <div class="monospaced"
+                                                    style="display: inline-block; font-size: 12px; font-family: 'Source Code Pro'; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                                    <p>Data Blocks</p>
                                             </div>
                                         </div>
                                     </div>

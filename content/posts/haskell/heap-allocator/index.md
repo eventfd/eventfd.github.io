@@ -1,20 +1,33 @@
 +++
 title = "Haskell Memory Management - Introduction"
-date = "2026-01-27"
-summary = "Introduction to Haskell's Heap Memory"
+date = "2026-01-26"
+summary = "Introduction to Haskell's Block Allocator"
 tags = ["haskell"]
 readTime = true
 articles = ["Haskell Memory Management"]
 +++
 
-In this post, we will see how Haskell manages heap memory.
+### Problem Statement
+> Given a pointer to a address inside a data block, how do we get pointer to the corresponding metadata?
 
-### Mega Blocks
+### Terminologies
 
-Memory is managed as mega-blocks of $1\ MiB$.  
-Each mega-block is further divided into page sized ($4\ KiB$) blocks.  
-The first few contiguous blocks store the metadata for the data blocks.
-Each metadata is $64\ B$
+`Alignment`
+: An address is said to be aligned at $2^n$ bytes if the address is a multiple of $2^n$
+
+`Mega Block`
+: A memory allocation of 1 MiB ($2^{20}$ bytes) aligned at 1 MiB
+
+`Block`
+: A chunk of memory 4 KiB ($2^{10}$ bytes) in size
+
+
+## Mega Block Layout
+
+* Memory is managed as mega-blocks of $1\ MiB$.  
+* Each mega-block is further divided into page sized ($4\ KiB$) blocks.  
+* The first four contiguous blocks store the metadata for the data blocks.
+* Each metadata is $64$ bytes
 
 ![Mega Block](mega-block.svg#light)
 
@@ -35,9 +48,7 @@ Since each block has a metadata entry, the above 4 metadata blocks would have 4 
 | $D_{251}$ | 255 | $255 \times 2^{12}$ | $255 \times 64 $
 
 
-### Metadata Lookup
-
-> Given a pointer to a address inside a data block, how do we get pointer to the corresponding metadata?
+## Algorithm
 
 It's easy to see that $\left \lfloor \frac{\text{data block offset}}{2^{12}} \right \rfloor$ would give the metadata index. Thus the metadata offset would be $\left \lfloor \frac{\text{data block offset}}{2^{12}} \right \rfloor \times 64$
 
@@ -88,3 +99,8 @@ this is exactly what the following snippet in [`rts/include/rts/storage/Block.h`
     ((((p) &  MBLOCK_MASK & ~BLOCK_MASK) >> (BLOCK_SHIFT-BDESCR_SHIFT)) \
      | ((p) & ~MBLOCK_MASK))
 ```
+
+## Benefits
+
+- Zero Memory loads
+- No branches
