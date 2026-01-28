@@ -28,7 +28,7 @@ readTime = true
 * The first four contiguous blocks store the metadata for the data blocks.
 * Each metadata is $64$ bytes
 
-![Mega Block](mega-block.svg#light)
+![Mega Block](mega-block.svg)
 
 So, the number of blocks is $\frac{1\ MiB}{4\ KiB} = 2^8 = 256$
 
