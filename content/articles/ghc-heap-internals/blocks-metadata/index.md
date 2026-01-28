@@ -99,7 +99,9 @@ this is exactly what the following snippet in [`rts/include/rts/storage/Block.h`
      | ((p) & ~MBLOCK_MASK))
 ```
 
-## Benefits
+## Advantages
 
 - Zero Memory loads
 - No branches
+- The size of the metadata entry aligns with L1 cache block size ($64\ B$), no cache contention
+- Having metadata entries contiguous improves spatial locality
