@@ -73,8 +73,8 @@ $$
 Let's now try to put it in code
 
 ```c
-#define MEGA_BLOCK_MASK (1 << 20)
-#define BLOCK_MASK      (1 << 12)
+#define MEGA_BLOCK_MASK ((1 << 20)-1)
+#define BLOCK_MASK      ((1 << 12)-1)
 
 /* take the least significant 20 bits */
 #define MEGA_BLOCK_OFFSET(p)  ((p) & MEGA_BLOCK_MASK)
