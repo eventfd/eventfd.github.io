@@ -4,6 +4,7 @@ date = "2026-01-26"
 summary = "Addressing Blocks and Metadata"
 tags = ["haskell"]
 readTime = true
+math = true
 +++
 
 ### Problem Statement
@@ -23,17 +24,28 @@ readTime = true
 
 ## Mega Block Layout
 
-* Memory is managed as mega-blocks of $1\ MiB$.  
-* Each mega-block is further divided into page sized ($4\ KiB$) blocks.  
+* Memory is managed as mega-blocks of 1 MiB.  
+* Each mega-block is further divided into page sized (4 KiB) blocks.  
 * The first four contiguous blocks store the metadata for the data blocks.
-* Each metadata is $64$ bytes
+* Each metadata is 64 bytes.
 
 ![Mega Block](mega-block.svg)
 
-So, the number of blocks is $\frac{1\ MiB}{4\ KiB} = 2^8 = 256$
+So, the number of blocks is
+$$
+\frac{\tt{1\ MiB}}{\tt{4\ KiB}} = \tt{2}^{\tt{8}} = \tt{256}
+$$
 
 Each of these blocks has a metadata associated.  
-Therefore, the total metadata size is $$2^8 \times 64\ B = 2^{14}\ B = \frac{2^{14}}{2^{12}}\ blocks = 4\ blocks$$
+Therefore, the total metadata size is
+$$
+\begin{aligned}
+& \tt{2}^{\tt{8}} \times \tt{64\ bytes}\\
+&= \tt{2}^{\tt{14}}\ \tt{bytes} \\
+&= \frac{\tt{2}^{\tt{14}}}{\tt{2}^{\tt{12}}}\ \tt{blocks}\\
+&= \tt{4\ blocks}
+\end{aligned}
+$$
 
 Thus, the total number of data blocks is $256 - 4 = 252$
 
@@ -49,7 +61,8 @@ Since each block has a metadata entry, the above 4 metadata blocks would have 4 
 
 ## Algorithm
 
-It's easy to see that $\left \lfloor \frac{\text{data block offset}}{2^{12}} \right \rfloor$ would give the metadata index. Thus the metadata offset would be $\left \lfloor \frac{\text{data block offset}}{2^{12}} \right \rfloor \times 64$
+It's easy to see that $\left \lfloor \frac{\text{data block offset}}{2^{12}} \right \rfloor$ would give the metadata index.  
+Thus the metadata offset would be $\left \lfloor \frac{\text{data block offset}}{2^{12}} \right \rfloor \times 64$
 
 > How do we get the data block offset?
 
@@ -103,5 +116,5 @@ this is exactly what the following snippet in [`rts/include/rts/storage/Block.h`
 
 - Zero Memory loads
 - No branches
-- The size of the metadata entry aligns with L1 cache block size ($64\ B$), no cache contention
+- The size of the metadata entry aligns with L1 cache block size (64 bytes), no cache contention
 - Having metadata entries contiguous improves spatial locality

@@ -17,8 +17,8 @@ I am a Software Engineer with a strong foundation in computer science and a pass
 I am interested in a range of topics, including algorithms, compiler design and operating systems.
 """
 # Collection to display on home
-homeCollectionTitle = "Recent Posts"
-homeCollection = "posts"
+homeCollectionTitle = "Recent Articles"
+homeCollection = "articles"
 
 # Lists parameters
 paginationSize = 5
@@ -32,9 +32,9 @@ showCurrentPage = true
 home = "~"
 
 # Social icons
-# [[params.social]]
-# name = "github"
-# url = "https://github.com/user"
+[[params.social]]
+name = "github"
+url = "https://github.com/eventfd"
 
 # Main menu pages
 
