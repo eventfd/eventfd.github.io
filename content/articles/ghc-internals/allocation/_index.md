@@ -1,3 +1,3 @@
 ---
-title: "GHC Heap Internals"
+title: "Memory Allocation"
 ---
