@@ -10,12 +10,9 @@ readTime = true
 
 In this post, we are going to cover how GHC allocates memory using bump allocator.
 
-## Terminologies
+## Problem Statement
 
-`Capability`
-: * Represents a CPU Core.
-  * Defaults to total number of CPU Cores on the running system.
-  * It can be changed by `+RTS -maxN` command line argument.
+> How do we design an efficient allocator for small objects (<= 4 KiB)
 
 ## Bump Allocation
 
@@ -33,7 +30,14 @@ A bump allocator contains the following:
 - End Address or the length of the allocated region
 - Free pointer to the next available address in the region
 
-The beauty of this approach is, deallocating all the allocated memory regions can be performed in constant time $O(1)$
+#### Advantage
+
+- Memory Allocation is $O(1)$
+- Deallocating _all_ the allocated memory blocks can be performed in constant time $O(1)$
+
+#### Disadvantage
+
+- Individual memory blocks cannot be de-allocated.
 
 ### Implementation
 
@@ -214,10 +218,9 @@ To avoid this issue, most operating systems support a feature called Huge-Pages.
 
 Going back to the parameters, we see the total size of the allocation $$N \times A = 2^{12} \times 2^8 = 1\ MiB$$
 
-- First, the memory allocation of `1 MiB` allocates a huge-page
-- Second, each bump allocator is given `4 KiB` of chunk which is same as the default page size in x86-64 CPUs.
-- Third, the number of allocators is `256` which is small.
-- [Fourth](/articles/ghc-internals/allocation/block-addressing/#algorithm), the most beautiful - given an address to a word, the address of the allocator can be computed **without any memory lookups**
+- First, the memory allocation of `1 MiB` allocates a huge-page, fewer TLB entries, and fewer OS calls.
+- Second, each bump allocator is given `4 KiB` of chunk which is same as the default page size in x86-64 CPUs. With this, the CPU does not have to lookup multiple pages.
+- [Third](/articles/ghc-internals/allocation/block-addressing/#algorithm), the most beautiful - given an address to a word, the address of the allocator can be computed **without any memory lookups**
 
 ## GHC Bump Allocator
 
@@ -239,3 +242,12 @@ Metadata for a block contains the following fields
 Here is how it looks
 
 ![metadata](./ghc-bump-allocator.svg "GHC Bump Allocator")
+
+
+## Summary
+
+Summarizing the design decisions of GHC:
+
+- Bump allocator: Fast pointer bumping for short-lived allocations; simplicity + speed > per-object de-allocation
+- 1 MiB blocks: Reduce OS calls, improve TLB/cache locality, simplify GC tracking.
+- 4 KiB blocks: Matches OS page size, enables fine-grained memory tracking, improves cache performance for small objects.
