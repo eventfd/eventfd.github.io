@@ -30,12 +30,12 @@ A bump allocator contains the following:
 - End Address or the length of the allocated region
 - Free pointer to the next available address in the region
 
-#### Advantage
+### Advantage
 
 - Memory Allocation is $O(1)$
 - Deallocating _all_ the allocated memory blocks can be performed in constant time $O(1)$
 
-#### Disadvantage
+### Disadvantage
 
 - Individual memory blocks cannot be de-allocated.
 
