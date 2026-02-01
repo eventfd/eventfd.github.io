@@ -218,8 +218,8 @@ To avoid this issue, most operating systems support a feature called Huge-Pages.
 
 Going back to the parameters, we see the total size of the allocation $$N \times A = 2^{12} \times 2^8 = 1\ MiB$$
 
-- First, the memory allocation of `1 MiB` allocates a huge-page, fewer TLB entries, and fewer OS calls.
-- Second, each bump allocator is given `4 KiB` of chunk which is same as the default page size in x86-64 CPUs. With this, the CPU does not have to lookup multiple pages.
+- First, GHC requests memory from the OS in units of megablocks (1 MiB each). This size reduces the number of expensive system calls and plays well with typical TLB sizes: a 1 MiB region can be covered by fewer TLB entries, reducing page table misses and improving access locality
+- Second, each bump allocator is given `4 KiB` of chunk which is same as the default page size in x86-64 CPUs. Because most allocations are small, this avoids large internal fragmentation
 - [Third](/articles/ghc-internals/allocation/block-addressing/#algorithm), the most beautiful - given an address to a word, the address of the allocator can be computed **without any memory lookups**
 
 ## GHC Bump Allocator
@@ -244,9 +244,7 @@ Here is how it looks
 ![metadata](./ghc-bump-allocator.svg "GHC Bump Allocator")
 
 
-## Summary
-
-Summarizing the design decisions of GHC:
+## Takeways
 
 - Bump allocator: Fast pointer bumping for short-lived allocations; simplicity + speed > per-object de-allocation
 - 1 MiB blocks: Reduce OS calls, improve TLB/cache locality, simplify GC tracking.
