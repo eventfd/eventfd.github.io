@@ -1,5 +1,5 @@
 +++
-title = "Part 1 - Addressing Blocks and Metadata"
+title = "Part 2 - Addressing Blocks and Metadata"
 date = "2026-01-26"
 summary = "Addressing Blocks and Metadata"
 tags = ["haskell"]
