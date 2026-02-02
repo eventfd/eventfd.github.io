@@ -18,3 +18,7 @@ Over the years, I've participated in a variety of competitions and challenges th
 - Rank 7 &mdash; [Decompetition 2022](https://web.archive.org/web/20240623151242/https://decompetition.io/scoreboard?scores=official)
 - Rank 41 &mdash; [Flare-On 2022](https://flare-on.com/2022.html)
 - Rank 16 &mdash; [Flare-On 2023](https://flare-on.com/2023.html)
+
+## Certifications
+
+- AWS Solutions Architect Associate &mdash; 2025-2028
