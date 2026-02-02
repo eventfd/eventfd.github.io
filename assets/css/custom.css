@@ -77,7 +77,7 @@ code {
   min-width: 200px;
   scrollbar-width: thin;
   scrollbar-color: light-dark(#4f4f4f, #555555) #e0e0e0;
-  max-height: 11.6lh;
+  /* max-height: 11.6lh; */
 }
 
 .macos-buttons {
