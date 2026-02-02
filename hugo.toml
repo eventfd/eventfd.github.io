@@ -1,6 +1,6 @@
 baseURL = "https://eventfd.github.io"
 languageCode = "en-us"
-title = "eventfd's log"
+title = "Suvaditya Sur"
 theme = "typo"
 
 [params]
@@ -12,13 +12,26 @@ singleDateFormat = "2 Jan 2006"
 hideHeader = false
 homeIntroTitle = "Hi!"
 homeIntroContent = """
-I am a Software Engineer with a strong foundation in computer science and a passion for solving problems.
+I'm a **Software Engineer** with a strong foundation in computer science and a love for problem-solving. My interests include algorithms, compiler design, operating systems, and functional programming—especially **Haskell**. I enjoy understanding systems from first principles and exploring how high-level abstractions map to real machines.
 
-I am interested in a range of topics, including algorithms, compiler design and operating systems.
+I'm motivated by the challenge of breaking complex systems down until they're simple enough to truly understand.
+
+This blog is where I share things I'm learning or experimenting with, as well as notes from challenges and projects that catch my interest.
+
+### Achievements
+
+- Rank 1 &mdash; InCTF 2019
+- AIR 145 &mdash; GATE CS 2021
+- Rank 7 &mdash; [Decompetition 2021](https://web.archive.org/web/20210925112333/https://decompetition.io/teams?scores=official)
+- Rank 14 &mdash; [Flare-On 2021](https://flare-on.com/2021.html)
+- Rank 2 &mdash; [Malwarebytes CTF](https://www.malwarebytes.com/blog/threat-intel/2021/10/the-return-of-the-malwarebytes-crackme)
+- Rank 7 &mdash; [Decompetition 2022](https://web.archive.org/web/20240623151242/https://decompetition.io/scoreboard?scores=official)
+- Rank 41 &mdash; [Flare-On 2022](https://flare-on.com/2022.html)
+- Rank 16 &mdash; [Flare-On 2023](https://flare-on.com/2023.html)
 """
 # Collection to display on home
-homeCollectionTitle = "Recent Articles"
-homeCollection = "articles"
+homeCollectionTitle = ""
+homeCollection = ""
 
 # Lists parameters
 paginationSize = 5
@@ -36,6 +49,10 @@ home = "~"
 name = "github"
 url = "https://github.com/eventfd"
 
+[[params.social]]
+name = "leetcode"
+url = "https://leetcode.com/eventfd"
+
 # Main menu pages
 
 [[params.menu]]
@@ -46,9 +63,6 @@ url = "/articles"
 name = "posts"
 url = "/posts"
 
-[[params.menu]]
-name = "about"
-url = "/about"
 
 # Syntax highlight on code blocks
 [markup]
