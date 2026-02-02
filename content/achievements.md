@@ -12,7 +12,7 @@ Over the years, I've participated in a variety of competitions and challenges th
 ## CTFs & Security Challenges
 - Rank 1 &mdash; [InCTF 2019](https://www.amrita.edu/events/amrita-inctf-2019/)
 - Rank 32 &mdash; [Flare-On 2020](https://flare-on.com/2020.html)
-- Rank 7 &mdash; [Decompetition 2021](https://web.archive.org/web/20210925112333/https://decompetition.io/teams?scores=official)
+- Rank 7 &mdash; [Decompetition 2020](https://web.archive.org/web/20210925112333/https://decompetition.io/teams?scores=official)
 - Rank 14 &mdash; [Flare-On 2021](https://flare-on.com/2021.html)
 - Rank 2 &mdash; [Malwarebytes CTF 2021](https://www.malwarebytes.com/blog/threat-intel/2021/10/the-return-of-the-malwarebytes-crackme)
 - Rank 7 &mdash; [Decompetition 2022](https://web.archive.org/web/20240623151242/https://decompetition.io/scoreboard?scores=official)
