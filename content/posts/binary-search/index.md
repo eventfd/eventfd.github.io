@@ -1,6 +1,6 @@
 +++
 title = "Binary Search"
-date = "2026-02-01"
+date = "2026-02-02"
 summary = "A different way to think about binary search"
 math = true
 tags = ["math", "algorithms"]
