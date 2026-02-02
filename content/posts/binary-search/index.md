@@ -61,7 +61,7 @@ We iterate until the search space is completely visited. At the end, we would ha
 
 $$l+1 = r$$
 
-### Pseudocode
+## Pseudocode
 
 ```python {title = "Binary Search"}
 def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
