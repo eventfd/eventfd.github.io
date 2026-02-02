@@ -78,6 +78,13 @@ def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
     return left, right
 ```
 
+#### Notes
+
+At every step we assign `mid` not `mid+1` or `mid-1`.  
+Because we maintain our invariant:  
+  1. `[l, left]` is the first partition (false values)
+  2. `[r, right]` is the second partition (truth values)
+
 ## Time Complexity
 
 Initially there are $N = r-l+1$ elements in the search space.
