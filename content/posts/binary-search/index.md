@@ -342,7 +342,7 @@ while size > 1:
 
 # Final Refactored Code
 
-```python {title = "Binary Stride"}
+```python {title = "Binary Search"}
 def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
     start = l
     size = r - l + 2
