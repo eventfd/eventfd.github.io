@@ -55,6 +55,14 @@ flowchart LR
 
 At every step we update either the partition #1 or partition #2
 
+### Update Right Partition
+
+![binary-search-update-right](./update-right.svg)
+
+### Update Left Partition
+
+![binary-search-update-left](./update-left.svg)
+
 ## Termination
 
 We iterate until the search space is completely visited. At the end, we would have the invariant
@@ -132,23 +140,27 @@ The algorithm above finds two values:
 1. First index of the partition where `f` evaluates to `true`
 2. Last index of the partition where `f` evaluates to `false`
 
-Let's do a bit of renaming, shall we?
+Instead of tracking the partitions, let's now focus on tracking the search space
+
+![search-space](./search-space.svg)
 
 ## Renaming
 
 We will now track only the unexplored space
 
 1. Define $start = l+1$
-2. Define $size = r-l$
+2. Define $size = r-l-1$
 
 So we have,
 
 $$
 \begin{aligned}
 mid &= l + \lfloor (r-l)/2 \rfloor \\
-    &= start  - 1 + \lfloor size/2 \rfloor
+    &= start  - 1 + \lfloor (size+1)/2 \rfloor
 \end{aligned}
 $$
+
+![tracking-search-space](./tr-srch.svg)
 
 ## Case Analysis
 
@@ -159,10 +171,11 @@ In this case, we assign $r = mid$
 $$
 \begin{align*}
 &\implies r' = mid \\
-&\implies size' + l = mid \\
-&\implies size' + start - 1 = mid \\
-&\implies size' + start - 1 = start  - 1 + \lfloor size/2 \rfloor \\
-&\implies size' = \lfloor size/2 \rfloor
+&\implies size' + l + 1 = mid \\
+&\implies size' + start = mid \\
+&\implies size' + start = start - 1 + \lfloor (size+1)/2 \rfloor \\
+&\implies size' = \lfloor (size+1)/2 \rfloor - 1 \\
+&\implies size' = \lceil size/2 \rceil - 1
 \end{align*}
 $$
 
@@ -175,22 +188,34 @@ Let the new values of $size$ and $start$ be $size'$ and $start'$. We have,
 $$
 \begin{align*}
 &\implies l' = mid \\
-&\implies start' - 1 = start  - 1 + \lfloor size/2 \rfloor \\
-&\implies start' = start + \lfloor size/2 \rfloor
+&\implies start' - 1 = start  - 1 + \lfloor (size+1)/2 \rfloor \\
+&\implies start' = start + \lfloor (size+1)/2 \rfloor \\
+&\implies start' = start + \lceil size/2 \rceil
 \end{align*}
 $$
 
 $$
 \begin{align*}
-&\implies size' = r-l' \\
-&\implies size' = r-mid \\
-&\implies size' = size + l - mid \\
+&\implies size' = r-l'-1 \\
+&\implies size' = size + l + 1 - l' - 1 \\
+&\implies size' = size + l - mid\\
 &\implies size' = size + start - 1 - mid \\
-&\implies size' = size + (start - 1) - (start  - 1 + \lfloor size/2 \rfloor) \\
-&\implies size' = size - \lfloor size/2 \rfloor
+&\implies size' = size + (start - 1) - (start - 1 + \lfloor (size+1)/2 \rfloor) \\
+&\implies size' = size - \lfloor (size+1)/2 \rfloor \\
+&\implies size' = size - \lceil size/2 \rceil \\
+&\implies size' = \lfloor size/2 \rfloor
 \end{align*}
 $$
 
+### Special Case
+
+When $size$ is odd, that is $size \equiv 1 \bmod 2$, we have
+
+$$
+\lfloor size/2 \rfloor \equiv \lceil size/2 \rceil - 1
+$$
+
+Which means the value of $size'$ is independent of the result of $f$.
 
 ### Initial Values
 
@@ -204,154 +229,85 @@ $$
 
 $$
 \begin{align*}
-&size = r - l \\
-&\implies size = (R + 1) - (L - 1) \\
-&\implies size = R - L + 2
+&size = r - l - 1\\
+&\implies size = (R + 1) - (L - 1) - 1 \\
+&\implies size = R - L + 1
 \end{align*}
 $$
 
-### Termination
-
-At the end of the loop, we have 
+### Condition
 
 $$
 \begin{align*}
-&l+1 = r \\
-&\implies l+1 = size + l \\
-&\implies size = 1
+&r - l > 1 \\
+&\implies r - l - 1 > 0 \\
+&\implies size > 0
 \end{align*}
 $$
-
-1. The loop iterates while $size > 1$ is `true`
-2. The value of $r$ is $l+1 = start + 1$
 
 # Refactored Algorithm
 
 ## Initial Rewrite
 
 ```python {title = "Initial Rewrite"}
-start = l + 1
-size = r - l + 2
-while size > 1:
-    half = size // 2
-    mid = start - 1 + half
+start = l
+size = r - l + 1
+while size > 0:
+    half = (size + 1) // 2
+    mid = start + half - 1
     if f(mid):
-        size = half
+        size = half - 1
     else:
         start = start + half
-        size = size - half
-```
-
-## Flipping the `if` condition
-
-We get
-
-```python {title = "Flipping the if condition"}
-start = l + 1
-size = r - l + 2
-while size > 1:
-    half = size // 2
-    mid = start - 1 + half
-    if not f(mid):
-        start += half
-        size -= half
-    else:
-        size = half
-```
-
-## Ceiling Reduction
-
-We know that
-
-$$
-\begin{align*}
-&\implies \lceil n/2 \rceil = \lfloor (n+1)/2 \rfloor
-\end{align*}
-$$
-
-That means `size -= half` can be re-written as
-
-```python {title = "Ceiling Reduction"}
-start = l + 1
-size = r - l + 2
-while size > 1:
-    half = size // 2
-    mid = start - 1 + half
-    if not f(mid):
-        start += half
-        size = (size + 1) // 2
-    else:
         size = size // 2
-```
-
-## Common Sub-Expression Elimination
-
-We see that $size = half$ is same as $size = \lfloor size/2 \rfloor$. Thus we get
-
-```python {title = "Common Sub-Expression Elimination"}
-start = l + 1
-size = r - l + 2
-while size > 1:
-    half = size // 2
-    mid = start - 1 + half
-    if not f(mid):
-        start += half
-        size += 1
-    size = size // 2
 ```
 
 ## Inlining
 
-We see that `mid` is effectively used only once, so, we can _inline_ it
-
-```python {title = "Inlining Expression"}
-start = l + 1
-size = r - l + 2
-while size > 1:
-    half = size // 2
-    if not f(start - 1 + half):
-        start += half
-        size += 1
-    size = size // 2
+```python {title = "Inlining"}
+start = l
+size = r - l + 1
+while size > 0:
+    half = (size + 1) // 2
+    if f(start + half - 1):
+        size = half - 1
+    else:
+        start = start + half
+        size = size // 2
 ```
 
-## Renaming Expression
+## Branch Predication
 
-Let's define 
+Predication is a technique by which the compiler replaces control-flow jumps with conditionally executed instructions.
+
+Additionally,
 
 $$
-\begin{align*}
-&start' = l \\
-&\implies start' = start - 1
-\end{align*}
+n - \lfloor (n+1)/2 \rfloor = n - \lceil n/2 \rceil = \lfloor n/2 \rfloor
 $$
 
-```python {title = "Renamed Code"}
-start = l + 1
-# start' = l + 1 - 1 = l
-size = r - l + 2
-while size > 1:
-    half = size // 2
-    # if not f(start' + half):
-    if not f(start - 1 + half):
-        # start' += half
-        start += half
-        size += 1
-    size = size // 2
+So, $size = size - half$ can be subsituted for $size = \lfloor size/2 \rfloor$
+
+```python {title = "Use Predication"}
+start = l
+size = r - l + 1
+while size > 0:
+    half = (size + 1) // 2
+    ok = int(f(start + half - 1))
+    start += half * (1 - ok)
+    size = (half-1) * ok | (size - half) * (1 - ok)
 ```
 
-# Final Refactored Code
+# Optimized Implementation
 
 ```python {title = "Binary Search"}
 def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
     start = l
-    size = r - l + 2
-    while size > 1:
-        half = size // 2
-        if not f(start + half):
-            start += half
-            size += 1
-        size = size // 2
-    
-    return start, start + 1
+    size = r - l + 1
+    while size > 0:
+        half = (size + 1) // 2
+        ok = int(f(start + half - 1))
+        start += half * (1 - ok)
+        size = (half-1) * ok + (size - half) * (1 - ok)
+    return start-1, start
 ```
