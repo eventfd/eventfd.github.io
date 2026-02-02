@@ -311,3 +311,5 @@ def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
         size = (half-1) * ok + (size - half) * (1 - ok)
     return start-1, start
 ```
+
+> That's the beauty of mathematical invariants => fearless refactoring!
