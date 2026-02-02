@@ -44,7 +44,7 @@ Binary Search works by keeping track of these partitions!
 flowchart LR
     A0["$$(r - l) > 1$$"] -->|True| A
     A0["$$(r - l) > 1$$"] -->|False| F
-    A["$$m = l + (r - l)/2$$"] -->|Evaluate| C["$$f(m)$$"]
+    A["$$m = l+\lfloor (r-l)/2 \rfloor$$"] -->|Evaluate| C["$$f(m)$$"]
     C -->|True| D["$$r = m$$"]
     C -->|False| E["$$l = m$$"]
     D --> A0
@@ -76,3 +76,41 @@ def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
             left = mid
     return left, right
 ```
+
+## Time Complexity
+
+Initially there are $N = r-l+1$ elements in the search space.
+
+At every iteration, we have $m = l+ \lfloor (r-l)/2 \rfloor$.
+
+$$
+\begin{aligned}
+N' &= \max(r-m, m-l) \\
+ &= \max(r - (l + \lfloor (r-l)/2 \rfloor), l + \lfloor (r-l)/2 \rfloor - l) \\
+ &= \max((r - l) - \lfloor (r-l)/2 \rfloor, \lfloor (r-l)/2 \rfloor) \\
+ &= \max(\lceil(r-l)/2\rceil, \lfloor (r-l)/2 \rfloor) \\
+ &= \lceil (r-l)/2 \rceil
+\end{aligned}
+$$
+
+So, 
+
+$$
+\begin{aligned}
+N-N' &= (r-l+1) - \lceil (r-l)/2 \rceil \\
+  &= \lfloor(r-l)/2 \rfloor + 1 \\
+  &\approx \lceil(r-l)/2 \rceil \\
+  &= N' \\
+\implies N' \approx N/2
+\end{aligned}
+$$
+
+This implies we are reducing the search space by half in every iteration. 
+
+Putting it mathematically, we have $$T(n) = T(n/2) + O(1)$$
+
+This results in $$T(n) = O(\log_2{n})$$
+
+## Space Complexity
+
+Throughout the algorithm, we allocate 3 variables - $O(1)$ or constant space
