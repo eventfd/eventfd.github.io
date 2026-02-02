@@ -51,10 +51,6 @@ home = "~"
 
 # Social icons
 [[params.social]]
-name = "github"
-url = "https://github.com/eventfd"
-
-[[params.social]]
 name = "leetcode"
 url = "https://leetcode.com/eventfd"
 
