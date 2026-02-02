@@ -18,21 +18,15 @@ I'm motivated by the challenge of breaking complex systems down until they're si
 
 This blog is where I share things I'm learning or experimenting with, as well as notes from challenges and projects that catch my interest.
 
-## Achievements
+### Achievements (Summary)
+- AIR 145 — GATE CS 2021
+- Rank 1 — InCTF 2019
+- Shortlisted for IOMA interview with stipend
+- Top ranks in Flare-On, Malwarebytes CTF, and Decompetition
 
-Over the years, I've participated in a variety of competitions and challenges that combine problem-solving, systems, and security:
 
-### Competitive Exams
-- AIR 145 &mdash; GATE CS 2021
+[See full list →](/achievements/)
 
-### CTFs & Security Challenges
-- Rank 1 &mdash; [InCTF 2019](https://www.amrita.edu/events/amrita-inctf-2019/)
-- Rank 7 &mdash; [Decompetition 2021](https://web.archive.org/web/20210925112333/https://decompetition.io/teams?scores=official)
-- Rank 14 &mdash; [Flare-On 2021](https://flare-on.com/2021.html)
-- Rank 2 &mdash; [Malwarebytes CTF 2021](https://www.malwarebytes.com/blog/threat-intel/2021/10/the-return-of-the-malwarebytes-crackme)
-- Rank 7 &mdash; [Decompetition 2022](https://web.archive.org/web/20240623151242/https://decompetition.io/scoreboard?scores=official)
-- Rank 41 &mdash; [Flare-On 2022](https://flare-on.com/2022.html)
-- Rank 16 &mdash; [Flare-On 2023](https://flare-on.com/2023.html)
 """
 # Collection to display on home
 homeCollectionTitle = ""
@@ -63,6 +57,10 @@ url = "/articles"
 [[params.menu]]
 name = "posts"
 url = "/posts"
+
+[[params.menu]]
+name = "achievements"
+url = "/achievements"
 
 
 # Syntax highlight on code blocks
