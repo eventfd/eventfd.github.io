@@ -276,28 +276,6 @@ while size > 0:
         size = size // 2
 ```
 
-## Branch Predication
-
-Predication is a technique by which the compiler replaces control-flow jumps with conditionally executed instructions.
-
-Additionally,
-
-$$
-n - \lfloor (n+1)/2 \rfloor = n - \lceil n/2 \rceil = \lfloor n/2 \rfloor
-$$
-
-So, $size = size - half$ can be subsituted for $size = \lfloor size/2 \rfloor$
-
-```python {title = "Use Predication"}
-start = l
-size = r - l + 1
-while size > 0:
-    half = (size + 1) // 2
-    ok = int(f(start + half - 1))
-    start += half * (1 - ok)
-    size = (half-1) * ok | (size - half) * (1 - ok)
-```
-
 # Optimized Implementation
 
 ```python {title = "Binary Search"}
@@ -306,10 +284,12 @@ def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
     size = r - l + 1
     while size > 0:
         half = (size + 1) // 2
-        ok = int(f(start + half - 1))
-        start += half * (1 - ok)
-        size = (half-1) * ok + (size - half) * (1 - ok)
+        if f(start + half - 1):
+            size = half - 1
+        else:
+            start += half
+            size //÷ 2
     return start-1, start
 ```
 
-> That's the beauty of mathematical invariants => fearless refactoring!
+> That's the beauty of mathematical invariants $\implies$ fearless refactoring!
