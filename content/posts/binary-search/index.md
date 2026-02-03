@@ -18,7 +18,7 @@ Binary Search is applicable if and only if, there exists a function $f$
 
 - $f$ partitions the space into two regions
 - $f$ is monotonic (once it changes value, it never changes back)
-- $f : \{L,L+1 \cdots R\} \rarrow \{T, F\}$
+- $f : \left {L,L+1 \cdots R \right } \rarrow \left {T, F \right }$
 
 At each step, evaluating $f$ allows us to discard one half of the search space.
 
