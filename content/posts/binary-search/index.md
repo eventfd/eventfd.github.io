@@ -14,12 +14,13 @@ In this post, I am going to present a different approach on how we can think abo
 What is a binary search?
 : Binary Search is all about dividing the search space into two halves and converging on an answer.
 
-Binary Search is applicable if and only if, there exists a function f
+Binary Search is applicable if and only if, there exists a function $f$
 
-- `f` partitions the space into two regions
-- `f` is monotonic (once it changes value, it never changes back)
+- $f$ partitions the space into two regions
+- $f$ is monotonic (once it changes value, it never changes back)
+- $f : \{L,L+1 \cdots R\} \rarrow \{T, F\}$
 
-At each step, evaluating `f` allows us to discard one half of the search space.
+At each step, evaluating $f$ allows us to discard one half of the search space.
 
 ![binary-search1](./binary-search-1.svg "At every step, binary search preserves the validity of these partitions")
 
@@ -95,7 +96,7 @@ Because we maintain our invariant:
   1. `[l, left]` is the first partition (false values)
   2. `[r, right]` is the second partition (truth values)
 
-# Time Complexity
+## Time Complexity
 
 Initially there are $N = r-l+1$ elements in the search space.
 
@@ -125,20 +126,20 @@ $$
 
 This implies we are reducing the search space by half in every iteration. 
 
-Putting it mathematically, we have $$T(n) = T(n/2) + O(1)$$
+Putting it mathematically, we have $$T(N) = T(N/2) + O(1)$$
 
-This results in $$T(n) = O(\log_2{n})$$
+This results in $$T(N) = O(\log_2{N})$$
 
-# Space Complexity
+## Space Complexity
 
 Throughout the algorithm, we allocate 3 variables - $O(1)$ or constant space
 
 
-# Optimization
+# A Different Approach
 
 The algorithm above finds two values:
-1. First index of the partition where `f` evaluates to `true`
-2. Last index of the partition where `f` evaluates to `false`
+1. First index of the partition where $f$ evaluates to $true$
+2. Last index of the partition where `f` evaluates to $false$
 
 Instead of tracking the partitions, let's now focus on tracking the search space
 
@@ -164,7 +165,7 @@ $$
 
 ## Case Analysis
 
-### Case 1 - `f` evaluates to `true`
+### Case 1 - $f$ evaluates to `true`
 
 In this case, we assign $r = mid$
 
@@ -179,7 +180,7 @@ $$
 \end{align*}
 $$
 
-### Case 2 - `f` evaluates to `false`
+### Case 2 - $f$ evaluates to `false`
 
 In this case, we assign $l = mid$. Notice that $size$ and $start$ both depend on $l$. So we need to update both of them.
 
@@ -245,9 +246,9 @@ $$
 \end{align*}
 $$
 
-# Refactored Algorithm
+## Refactored Algorithm
 
-## Initial Rewrite
+### Initial Rewrite
 
 ```python {title = "Initial Rewrite"}
 start = l
@@ -262,7 +263,9 @@ while size > 0:
         size = size // 2
 ```
 
-## Inlining
+### Inlining
+
+Since $mid$ is used only once, we can effectively inline it
 
 ```python {title = "Inlining"}
 start = l
@@ -276,7 +279,7 @@ while size > 0:
         size = size // 2
 ```
 
-# Optimized Implementation
+## Implementation
 
 ```python {title = "Binary Search"}
 def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
@@ -288,8 +291,8 @@ def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
             size = half - 1
         else:
             start += half
-            size //÷ 2
+            size //= 2
     return start-1, start
 ```
 
-> That's the beauty of mathematical invariants $\implies$ fearless refactoring!
+> That's the beauty of mathematical invariants! Once the invariants are established, refactoring can be done fearlessly!
