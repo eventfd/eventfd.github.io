@@ -5,6 +5,7 @@ summary = "A different way to think about binary search"
 math = true
 tags = ["math", "algorithms"]
 toc = true
+readTime = true
 +++
 
 In this post, I am going to present a different approach on how we can think about binary search.
