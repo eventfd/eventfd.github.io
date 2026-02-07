@@ -67,7 +67,7 @@ At every step we update either the partition #1 or partition #2
 
 ## Termination
 
-We iterate until the search space is completely visited. At the end, we would have the invariant
+We iterate until the search space is completely visited. At the end, we would have
 
 $$l+1 = r$$
 
@@ -142,13 +142,18 @@ The algorithm above finds two values:
 1. First index of the partition where $f$ evaluates to $true$
 2. Last index of the partition where `f` evaluates to $false$
 
-Instead of tracking the partitions, let's now focus on tracking the search space
+Instead of tracking the partitions, let's now focus on tracking the search space.
+
+
+Let $(start, size)$ be a pair denoting a span of the search space with $size$ denoting the size and $start$ denoting the position.
+
+## Invariant
+
+Let's define the invariant as $(start, size)$ tracking the **unvisited search space**. We will make transformations necessary to preserve this invariant.
 
 ![search-space](./search-space.svg)
 
 ## Renaming
-
-We will now track only the unexplored space
 
 1. Define $start = l+1$
 2. Define $size = r-l-1$
