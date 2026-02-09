@@ -1,5 +1,5 @@
 +++
-title = "Binary Search"
+title = "Introduction"
 date = "2026-02-02"
 summary = "A different way to think about binary search"
 math = true
@@ -13,35 +13,63 @@ In this post, I am going to present a different approach on how we can think abo
 # Definition
 
 What is a binary search?
-: Binary Search is all about dividing the search space into two halves and converging on an answer.
+: Binary Search is all about searching for an answer by reducing the partitioning space into half.
 
-Binary Search is applicable if and only if, there exists a function $f$
+This definition does not feel quite right to me. So, I am going to generalize this a bit. Let's proceed.
 
-- $f$ partitions the space into two regions
-- $f$ is monotonic (once it changes value, it never changes back)
-- $f : \{L, L+1, \dots, R\} \to \{T, F\}$
+# Generalization
 
-At each step, evaluating $f$ allows us to discard one half of the search space.
+Let's generalize the approach to $partitioning$. That is we are interested in finding the partitions of a function $f$ over a given space.
 
-![binary-search1](./binary-search-1.svg "At every step, binary search preserves the validity of these partitions")
+Let's denote the space by **closed interval** $\left [L, R \right]$
 
-Binary Search works by keeping track of these partitions!
+Binary Partitioning is applicable if and only if, $f$ satisfies:
 
-# Algorithm
+1. $f : \{L, L+1, \dots, R\} \to \{T, F\}$
+2. $f$ is monotonic (once it changes value, it never changes back)
+3. The monotonicity of $f$ is a sequence zero or more of $F$'s followed by zero or more $T$'s
+
+Since the range of $f$ is a set of size 2 that is the reason, we refer it to as *binary*
+
+![binary-search1](./binary-search-1.svg "Binary Partitioning - Visualization")
+
+We want to partition the space into two -
+
+* $1^{st}\ partition$ - $\left [start_1, end_1 \right]$
+* $2^{st}\ partition$ - $\left [start_2, end_2 \right]$
 
 ## Assumptions
 
-- We want to search in the closed interval of indices $\left [ L, R\right ]$
-- We maintain two boundaries l and r such that:
-  – all indices $0 \leq l$ belong to Partition #1
-  – all indices $r \leq R$ belong to Partition #2
-- The active search space is the open interval $\left (l, r \right )$
+Based on the above definition, we can see that
 
-## Initialization
+1. The $1^{st}$ partition **always begins** at the first index in the space (**if it exists**)
+2. The $2^{nd}$ partition **always ends** at the last index in the space (**if it exists**)
 
-- $l = L-1$, and $r = R+1$ with these values, we satisfy the above assumptions.
+Having said that, this means we can ignore $start_1$ and $end_2$. Thus we have:
 
-## Iteration
+* $1^{st}\ partition$ - $\left [L, end_1 \right]$
+* $2^{st}\ partition$ - $\left [start_2, R \right]$
+
+Let us denote $end_1$ by $l$ and $start_2$ by $r$.
+
+## Approach
+
+### Initialization
+
+We define $l = L-1$ and $r = R-1$ because we have not visited the space yet. So our partitions are empty.
+
+We now compute the middle index of $l$ and $r$ by $$mid = l + \lfloor (r-l)/2 \rfloor$$
+
+### Case 1 - $f(mid)$ is $F$
+
+Because $f$ is monotone, all values from $\left [L, mid \right]$ takes $F$. Thus we can update $l$ by $l = mid$.
+
+### Case 2 - $f(mid)$ is $T$
+
+Because $f$ is monotone, all values from $\left [mid, \right]$ takes $T$. Thus we can update $r$ by $r = mid$.
+
+
+# Algorithm
 
 ```mermaid
 flowchart LR
@@ -67,7 +95,7 @@ At every step we update either the partition #1 or partition #2
 
 ## Termination
 
-We iterate until the search space is completely visited. At the end, we would have
+We iterate until the partitioning space is completely visited. At the end, we would have
 
 $$l+1 = r$$
 
@@ -75,8 +103,9 @@ $$l+1 = r$$
 
 Here is an implementation of the algorithm in python
 
-```python {title = "Binary Search"}
-def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
+```python {title = "Binary Partitioning"}
+from typing import Callable
+def partition(l: int, r: int, f: Callable[[int], bool]) -> tuple[int, int]:
     left, right = l-1, r+1
     # while there is atleast one unvisited element
     while right-left > 1:
@@ -99,7 +128,7 @@ Because we maintain our invariant:
 
 ## Time Complexity
 
-Initially there are $N = r-l+1$ elements in the search space.
+Initially there are $N = r-l+1$ elements in the partitioning space.
 
 At every iteration, we have $m = l+ \lfloor (r-l)/2 \rfloor$.
 
@@ -125,7 +154,7 @@ N-N' &= (r-l+1) - \lceil (r-l)/2 \rceil \\
 \end{aligned}
 $$
 
-This implies we are reducing the search space by half in every iteration. 
+This implies we are reducing the partitioning space by half in every iteration. 
 
 Putting it mathematically, we have $$T(N) = T(N/2) + O(1)$$
 
@@ -142,14 +171,14 @@ The algorithm above finds two values:
 1. First index of the partition where $f$ evaluates to $true$
 2. Last index of the partition where `f` evaluates to $false$
 
-Instead of tracking the partitions, let's now focus on tracking the search space.
+Instead of tracking the partitions, let's now focus on tracking the partitioning space.
 
 
-Let $(start, size)$ be a pair denoting a span of the search space with $size$ denoting the size and $start$ denoting the position.
+Let $(start, size)$ be a pair denoting a span of the partitioning space with $size$ denoting the size and $start$ denoting the position.
 
 ## Invariant
 
-Let's define the invariant as $(start, size)$ tracking the **unvisited search space**. We will make transformations necessary to preserve this invariant.
+Let's define the invariant as $(start, size)$ tracking the **unvisited partitioning space**. We will make transformations necessary to preserve this invariant.
 
 ![search-space](./search-space.svg)
 
@@ -287,8 +316,10 @@ while size > 0:
 
 ## Implementation
 
-```python {title = "Binary Search"}
-def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
+```python {title = "Binary Partitioning"}
+from typing import Callable
+
+def partition(l: int, r: int, f: Callable[[int], bool]) -> tuple[int, int]:
     start = l
     size = r - l + 1
     while size > 0:

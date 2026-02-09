@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage{tikz}
+
+\begin{document}
+
+\usetikzlibrary{shapes.geometric,arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
+
+% \tikzstyle{diam} = [diamond, aspect=2, draw, fill=red!40, text width=6em,text centered ]
+% \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=3cm,text centered, rounded corners, minimum height=2em ]
+% \tikzstyle{trap} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum height=2em, text centered, draw=red, fill=green!30]
+% \tikzstyle{rect} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=red, fill=orange!30]
+% \tikzstyle{line} = [draw, -latex]
+
+\begin{tikzpicture}[node distance=1cm and 1cm]
+
+    % place nodes
+    \node (init) {start here} ;
+    \node [below=of init] (decision-1) {decision?} ;
+    \node [right=of decision-1, yshift=1cm] (block-1) {block-1} ;
+    \node [below=of decision-1, yshift=-1cm] (block-2) {block-2} ;
+    \node [right=of block-2] (block-3) {block-3 very long text, I am adding more text} ;
+    \node [below=of block-3] (decision-2) {decision-2?} ;
+    \node [right=of decision-2] (block-4) {block-4} ;
+    \node [below=of decision-2] (decision-3) {decision-3?} ;
+    \node [left=of decision-3] (block-6) {block-6} ;
+    \node [right=of decision-3] (block-5) {block-5} ;
+    \node [below=of block-6] (block-7) {block-7} ;
+    \node [right=of block-7] (block-8) {block-8} ;
+    \node [right=of block-8] (block-9) {block-9} ;
+
+    % draw edges
+    \path (init) -- (decision-1) ;
+    \path (decision-1) -| node[right] {yes} (block-1) ;
+    \path (decision-1) -- node[left] {no}(block-2) ;
+    \path (block-2) -- (block-3) ;
+    \path (block-3) -- (decision-2) ;
+    \draw (block-4) -- (block-3);
+    \draw (block-4) |- (block-3);
+    \path (decision-2) -- node[above] {no} (block-4) ;
+    \path (decision-2) -- node[fill=white] {yes} (decision-3) ;
+    \path (decision-3) -- node[above] {yes} (block-6) ;
+    \path (decision-3) -- node[below] {no} (block-5) ;
+    \path (block-6) -- (block-7) ;
+    \path (block-7) -- (block-8) ;
+    \path (block-8) -- (block-9) ;
+
+    \path[<->] (block-7.west) edge[bend left=50] (block-2.west) ;
+    \path[rounded corners] (init.west) -| ($(init.west) - (1,1)$) |- (block-2.west) ;
+
+\end{tikzpicture}
+
+\end{document}

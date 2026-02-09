@@ -13,7 +13,7 @@ const initCopyButtons = () => {
       const text = codeBlock?.textContent || codeBlock?.innerText;
       navigator.clipboard.writeText(text).then(() => {
         copyButton.innerHTML = "Copied!";
-        // setTimeout(() => copyButton.innerHTML = prevText, 2000);
+        setTimeout(() => copyButton.innerHTML = prevText, 2000);
       }).catch(err => {
         console.error(`Clipboard Copy failed: ${err}`);
         copyButton.innerHTML = "❌ Failed!";

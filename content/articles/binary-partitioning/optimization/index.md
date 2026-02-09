@@ -1,5 +1,5 @@
 +++
-title = "Binary Search - Optimization"
+title = "Optimization"
 date = "2026-02-07"
 summary = "Diving into x86-64 assembly"
 math = true
@@ -8,18 +8,20 @@ toc = true
 readTime = true
 +++
 
-Before reading this post, I would request you to first take a look at [Binary Search - Part 1](/posts/binary-search/)
+Before reading this post, I would request you to first take a look at [Binary Partioning - Introduction](/articles/binary-partitioning/introduction/)
 
 # Context
 
-Let $(start, size)$ be a pair denoting a span of the search space with $size$ denoting the size and $start$ denoting the position. We had defined the invariant as $(start, size)$ tracking the **unvisited search space**.
+Let $(start, size)$ be a pair denoting a span of the partitioning space with $size$ denoting the size and $start$ denoting the position. We had defined the invariant as $(start, size)$ tracking the **unvisited partitioning space**.
 
-We had assumed that $[l, r]$ represents the search space as a **closed interval**. This is very important for the next part.
+We had assumed that $[l, r]$ represents the partitioning space as a **closed interval**. This is very important for the next part.
 
 In our last implementation, we wrote this code:
 
-```python {title = "Binary Search"}
-def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
+```python {title = "Binary Partitioning"}
+from typing import Callable
+
+def partition(l: int, r: int, f: Callable[[int], bool]) -> tuple[int, int]:
     start = l
     size = r - l + 1
     while size > 0:
@@ -34,7 +36,7 @@ def binary_search(l: int, r: int, f: Callback[[int], bool]) -> tuple[int, int]:
 
 I will be using C now, since we are diving into a bit lower level semantics:
 
-```c {title = "Binary Search"}
+```c {title = "Binary Partioning"}
 typedef bool (*partition_fn)(uint32_t index);
 
 /**
@@ -43,7 +45,7 @@ typedef bool (*partition_fn)(uint32_t index);
      2. r-l < u32::MAX
  */
 uint32_t
-binary_search(uint32_t l, uint32_t r, partition_fn f)
+partition(uint32_t l, uint32_t r, partition_fn f)
 {
     uint32_t start = l;
     assert(l <= r, "l must be <= r");
@@ -153,7 +155,7 @@ This means we can remove the $then$ clause and use a conditional to check if $si
 Here's a little trick: The ternary operator in C `<expr> ? <rv1> : <rv2>` can be used to instruct the compiler to generate conditional instructions.
 
 
-```c {title = "Binary Search"}
+```c {title = "Binary Partioning"}
 typedef bool (*partition_fn)(uint32_t index);
 
 /**
@@ -162,7 +164,7 @@ typedef bool (*partition_fn)(uint32_t index);
      2. r-l < u32::MAX
  */
 uint32_t
-binary_search(uint32_t l, uint32_t r, partition_fn f)
+partition(uint32_t l, uint32_t r, partition_fn f)
 {
     uint32_t start = l;
     // assert(l <= r && "l must be <= r");
