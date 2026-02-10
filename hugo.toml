@@ -6,7 +6,7 @@ theme = "typo"
 [params]
 description = "eventfd"
 disableSocialMeta = true
-theme = "light"
+theme = "auto"
 colorPalette = "default"
 singleDateFormat = "2 Jan 2006"
 hideHeader = false
