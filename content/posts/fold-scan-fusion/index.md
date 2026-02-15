@@ -1,140 +1,119 @@
----
-title: "Fold Scan Fusion"
-date: "2026-01-02"
-summary: "Exploring the Fold Scan Fusion property"
-toc: true
-math: false
-readTime: true
-autonumber: false
-tags: ["haskell"]
-showTags: false
-hideBackToTop: false
----
++++
+title = "Fold Scan Fusion"
+date = "2026-02-14"
+summary = "Fold Scan Fusion - an Optimized Iteration Pattern"
+math = true
+tags = ["math", "algorithms"]
+toc = true
+readTime = true
++++
 
-There's a very interesting property when it comes to `scan` and `fold`.
+## Context
 
-```haskell{title="Definition"}
-foldl f f0 . scanl g g0 === foldl h (f f0 g0, g0)
-  where h (x, y) e = (f x (g y e), g y e)
+As programmers or data-engineers working you might have encountered a pattern of the following type
+
+1. Perform a cumulative accumulation of results on an array, say using a function $f$
+2. Perform a total accumulation of results on this new array, say using a function $g$
+
+### Examples
+
+- Simulate how a router handles incoming packets when the outgoing bandwidth is capped.
+    1. $f$ (Prefix Sum with Local Maximum): Given an array of incoming traffic minus outgoing capacity, you perform a cumulative sum. However, if the sum drops below zero (idle link), it stays at zero. This gives you the instantaneous queue size.
+    2. $g$ (Monotone Partitioning): You perform a count of how many times the resulting values exceed the hardware buffer limit.
+
+- Maximum Concurrent Users - where you might need to count, at any given time, maximum users who are logged in to a system.
+  1. $f$ (Prefix Sum): You sort the events by time and perform a cumulative sum of the $+1$s and $-1$s. This gives you the number of active users at any timestamp.
+  2. $g$ (Maximum): You find the maximum value of that new array to determine the Peak Concurrency, which dictates how much server capacity you need to provision.
+
+## Standard Implementation
+
+I am removing the generics and focussing on a specialized instance for ease of understanding.
+
+```py {title = "Standard Implementation"}
+from typing import Callable
+
+def solve(input: list[int], f_init: int, f: Callable[[int, int], int], g_init: int, g: Callable[[int, int], int]) -> int:
+    buf = list[int]()
+    val = f_init
+    for e in input:
+        val = f(val, e)
+        buf.append(val)
+    rv = g_init
+    for e in buf:
+        rv = g(rv, e)
+    return rv
 ```
 
-Feel free to [skip](#explanation) the following section if you are familiar with `fold`s and `scan`s.
+### Problem
 
+1. The Space Complexity is $O(len(input))$ - **wasted space**
 
-## Definition
+## Fold-Scan Fusion Theorem
 
-```text{title="scanl"}
-def scanl(iter: Iterable[T], init: A, pred: Fn(A, T) -> A) -> Iterable[A] {
-  for e in iter {
-    yield init
-    init = pred(init, e)
-  }
-}
-```
-```text{title="foldl"}
-def foldl(iter: Iterable[T], init: A, pred: Fn(A, T) -> A) -> A {
-  for e in iter {
-    init = pred(init, e)
-  }
-  return init
-}
-```
-
-`fold` folds the iterable using `pred` as the function *accumulating* result on the way, whereas `scan` returns an iterable consisting of the intermediate results.
-
-There are two variants of fold - `foldl` and `foldr`. The main difference is in the associativity, that is., `foldl` consumes the iterator from the beginning whereas `foldr` consumes it from the end.
-
-
-## Explanation
-
-Consider the following expression,
-
-```
-rv = fold(scan(list, g0, g), f0, f)
-```
-
-Let's do a dry run here. Say, the elements of the list are denoted by $e_i \forall \ 0 \le i \lt n$ where $n$ represents the number of elements in the `list`
-
-The output of `scan` is $$s = \left[g_0, g(g_0, e_0), g(g(g_0, e_0), e_1), \cdots \right]$$
-
-Now we apply fold to the new set of values:
-
-| $i$ | $s_i$ | $rv_i$ |
-| --- | --- | --- |
-| $0$ | $g_0$ | $f_0$ |
-| $1$ | $g(s_0, e_0)$ | $f(rv_0, s_0)$ |
-| $2$ | $g(s_1, e_1)$ | $f(rv_1, s_1)$ |
-|$\cdots$ | $\cdots$ | $\cdots$ |
-| $k-1$ | $g(s_{k-2}, e_{k-2})$ | $f(rv_{k-2}, s_{k-2})$ |
-| $k$ | $g(s_{k-1}, e_{k-1})$ | $f(rv_{k-1}, s_{k-1})$ |
-
-Observe that $rv_i$ is lagging behind $s_i$ as $s_i$ depends on $e_{i-1}$ whereas $rv_i$ depends on $s_{i-1}$ thereby depending on $e_{i-2}$. Shifting up by one row for $rv_i$, we get
-
-| $i$ | $s_i$ | $rv_{i+1}$ |
-| --- | --- | --- |
-| $0$ | $g_0$ | $f(rv_0, s_0)$ |
-| $1$ | $g(s_0, e_0)$ | $f(rv_1, s_1)$ |
-| $2$ | $g(s_1, e_1)$ | $f(rv_2, s_2)$ |
-|$\cdots$ | $\cdots$ | $\cdots$ |
-| $n-1$ | $g(s_{n-2}, e_{n-2})$ | $f(rv_{n-1}, s_{n-1})$ |
-
-We get the following pseudocode
-```
-(s, rv) = (g[0], f(f[0], g[0]))
-for e in list {
-  s = g(s, e)
-  rv = f(rv, s)
-}
-```
-
-If we keep a track of the pair `(s, rv)` at every iteration, we can reduce it into a single fold `h`
-
-Where `h` can be defined as
-
-```
-def h(s: A, rv: B, e: E) -> (A, B) {
-  s' = g(s, e)
-  rv' = f(rv, s')
-  return (s', rv')
-}
-```
-
-Alright, let's run a quick property test
+The theorem says 
 
 ```haskell
-import Test.QuickCheck
-
-foldScan f g f0 g0 = foldl f f0 . scanl g g0
-
-fusedScan f g f0 g0 = snd . foldl h (g0, f f0 g0)
-  where h (s, rv') e = (g s e, f rv' (g s e))
-
-foldFusion :: (Eq a, Show a) => (a -> b -> a) -> (b -> p -> b) -> a -> b -> [p] -> Property
-foldFusion f g f0 g0 xs = foldScan f g f0 g0 xs === fusedScan f g f0 g0 xs
-
--- define the concrete types for a sample property testing
-propFoldFusion :: Fun (Int, Int) Int -> Fun (Int, Int) Int -> Int -> Int -> [Int] -> Property
-propFoldFusion (Fn2 f) (Fn2 g) = foldFusion f g
-
-main :: IO ()
-main = do
-  quickCheck propFoldFusion
+foldl g g_init . scanl f f_init === foldl h (g g_init f_init, f_init)
+  where h (x, y) e = (g x (f y e), f y e)
 ```
 
-And, here's the output:
+Let's break it down to simple english:
+1. Performing a scan using $\left (g,\ g_{init} \right )$ followed by fold using $\left (f,\ f_{init} \right )$ is equivalent to performing fold using $\left (h,\ h_{init} \right)$
+2. $h_{init} = \left( f(f_{init},\ g_{init}),\ g_{init} \right)$
+3. $h ((x,\ y),\ e) = \left(f(x,\ g(y,\ e)),\ g(y,\ e)\right)$
 
-```shell
-$ stack test
-...
-testing> test (suite: testing-test)
-                     
-+++ OK, passed 100 tests.
+## Proof
 
-testing> Test suite testing-test passed
-Completed 2 action(s).
+1. Inspect `scan f`
+
+| $i$ | $scan_i$ |
+| --- | --- |
+| $0$ | $\left [f(f_{init}, e_0) \right]$ |
+| $1$ | $\left [f(f_{init}, e_0), f(f(f_{init}, e_0), e_1) \right]$ |
+| $\cdots$ | $\cdots$ |
+| $n-1$ | $\left [f(f_{init}, e_0), f(f(f_{init}, e_0), e_1) \cdots f^{n}((f_{init}, e_0), \cdots e_{n-1}) \right]$ |
+
+2. Apply `fold g`
+
+| $i$ | $fold_i$ |
+| --- | ---- |
+| $0$ | $g(g_{init}, scan_{n-1}[0])$ |
+| $1$ | $g(fold_0, scan_{n-1}[1])$ |
+| $\cdots$ | $\cdots$ |
+| $n-1$ | $g(fold_{n-2}, scan_{n-1}[n-1])$ |
+
+3. Expand value of $scan_{n-1}$
+
+| $i$ | $fold_i$ |
+| --- | ---- |
+| $0$ | $g(g_{init}, f(f_{init}, e_0))$ |
+| $1$ | $g(fold_0, f(f(f_{init}, e_0), e_1))$ |
+| $\cdots$ | $\cdots$ |
+| $n-1$ | $g(fold_{n-2}, f^{n}((f_{init}, e_0), \cdots e_{n-1}))$ |
+
+If you see carefully, you will notice that the value of $f^{i-1}(...)$ is **reused** in the $i^{th}$ iteration. To prevent *recomputation*, we just need to **include this value into the state of fold**.
+
+Thus the fold becomes
+
+$$
+g'((g_i,\ f_i),\ e) = ( g(g_i,\ f(f_i,\ e)),\ f(f_i,\ e) )
+$$
+
+This is exactly what the theorem says.
+
+
+## Optimized Implementation
+
+```py {title = "Optimized Implementation"}
+from typing import Callable
+
+def solve(input: list[int], f_init: int, f: Callable[[int, int], int], g_init: int, g: Callable[[int, int], int]) -> int:
+    def h(x, y, e):
+        t = f(y, e)
+        return g(x, t), t
+    
+    state = (g(g_init, f_init), f_init)
+    for e in input:
+        state = h(*state, e)
+    return state[0]
 ```
-
-
-## References
-
-- `Algebraic Identities for Program Calculation` by Richard Bird
