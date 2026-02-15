@@ -8,7 +8,7 @@ toc = true
 readTime = true
 +++
 
-Before reading this post, I would request you to first take a look at [Binary Partioning - Introduction](/articles/binary-partitioning/introduction/)
+Before reading this post, I would request you to first take a look at [Binary Partitioning - Introduction](/articles/binary-partitioning/introduction/)
 
 # Context
 
