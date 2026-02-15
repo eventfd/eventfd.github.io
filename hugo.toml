@@ -35,7 +35,8 @@ homeCollection = ""
 # Lists parameters
 paginationSize = 5
 listSummaries = true
-listDateFormat = "2 Jan 2006"
+listDateFormat = "02 Jan 2006"
+showFooter = true
 
 # Breadcrumbs
 [params.breadcrumbs]
