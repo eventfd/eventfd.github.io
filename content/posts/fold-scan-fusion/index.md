@@ -1,6 +1,6 @@
 +++
 title = "Fold Scan Fusion"
-date = "2026-02-14"
+date = "2026-02-15"
 summary = "Fold Scan Fusion - an Optimized Iteration Pattern"
 math = true
 tags = ["math", "algorithms"]
