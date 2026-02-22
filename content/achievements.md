@@ -5,9 +5,8 @@ title = "Achievements"
 Over the years, I've participated in a variety of competitions and challenges that combine problem-solving, systems, and security:
 
 ## Competitive Exams
-- AIR 145 &mdash; GATE CS 2021
 - Rank 66 &mdash; Codevita 2018
-- Shortlisted for an interview at the [Institute of Mathematics and Applications](https://iomaorissa.ac.in/), Odisha, with a stipend
+- AIR 145 &mdash; GATE CS 2021
 
 ## CTFs & Security Challenges
 - Rank 1 &mdash; [InCTF 2019](https://www.amrita.edu/events/amrita-inctf-2019/)

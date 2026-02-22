@@ -2,6 +2,7 @@ baseURL = "https://eventfd.github.io"
 languageCode = "en-us"
 title = "Suvaditya Sur"
 theme = "typo"
+enableGitInfo = true
 
 [params]
 description = "eventfd"

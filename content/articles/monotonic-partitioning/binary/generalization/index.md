@@ -34,7 +34,7 @@ def partition(l: int, r: int, f: Callable[[int], bool]) -> tuple[int, int]:
     return start-1, start
 ```
 
-## Generalization
+## Right-Open Interval
 
 The algorithm above is mathematically correct. There is one problem with this approach - the partitioning interval is closed. 
 
@@ -109,4 +109,31 @@ $ python -m unittest test
 Ran 1 test in 8.249s
 
 OK
+```
+
+## Full-Open Interval
+
+Let's try to modify the algorithm to consider $\left (l, r \right )$. This interval can represent empty ranges as well as non-empty ranges.
+
+## Properties
+
+1. The start index remains the same $\implies l' = l - 1$
+2. The end index is one ahead $\implies r' = r + 1$
+
+Substituting $r = r' - 1$ and $l = l' + 1$ we get,
+
+```python {title = "Binary Partitioning"}
+from typing import Callable
+
+def partition(l: int, r: int, f: Callable[[int], bool]) -> tuple[int, int]:
+    start = l + 1
+    size = r - l - 1
+    while size > 0:
+        half = (size + 1) // 2
+        if f(start + half - 1):
+            size = half - 1
+        else:
+            start += half
+            size //= 2
+    return start-1, start
 ```
