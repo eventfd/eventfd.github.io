@@ -1,49 +1,7 @@
 :root {
-    --font-mono: 'Source Code Pro';
+    --font-mono: 'Fira Code VF';
     --font-body: 'Source Sans 3';
     --code-padding: 1rem;
-}
-
-@font-face {
-    font-family: 'Fira Code';
-    src: url('/fonts/FiraCode-Light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Fira Code';
-    src: url('/fonts/FiraCode-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Fira Code';
-    src: url('/fonts/FiraCode-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Fira Code';
-    src: url('/fonts/FiraCode-SemiBold.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Fira Code';
-    src: url('/fonts/FiraCode-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Fira Code VF';
-    src: url('/fonts/FiraCode-VF.woff2') format(woff2) tech(variations);
-    font-weight: 300 700;
-    font-style: normal;
 }
 
 pre,
