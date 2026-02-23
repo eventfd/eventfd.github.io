@@ -58,10 +58,6 @@ name = "posts"
 url = "/posts"
 
 [[params.menu]]
-name = "achievements"
-url = "/achievements"
-
-[[params.menu]]
 name = "tags"
 url = "/tags"
 
