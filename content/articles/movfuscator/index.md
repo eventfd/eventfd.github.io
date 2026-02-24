@@ -1,9 +1,9 @@
 +++
 title = "MoVfuscator"
-date = "2026-02-14"
+date = "2026-02-23"
 summary = "Introduction to MoVfuscator"
 math = true
-tags = ["re"]
+tags = ["re", "asm"]
 toc = true
 readTime = true
 +++
