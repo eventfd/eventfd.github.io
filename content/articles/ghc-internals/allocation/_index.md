@@ -1,3 +1,4 @@
----
-title: "Memory Allocation"
----
++++
+title = "Memory Allocation"
+summary = "GHC Memory Allocation"
++++
