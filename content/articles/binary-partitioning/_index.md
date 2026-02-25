@@ -1,4 +1,4 @@
 +++
 title = "Binary Partitioning"
-description = "Binary Partitioning - Introduction, Optimization and Generalization"
+summary = "Binary Partitioning - Introduction, Optimization and Generalization"
 +++

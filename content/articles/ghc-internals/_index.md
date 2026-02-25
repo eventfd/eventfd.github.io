@@ -1,4 +1,4 @@
 +++
 title = "GHC Internals"
-description = "Exploring the GHC Runtime"
+summary = "Exploring the GHC Runtime"
 +++
