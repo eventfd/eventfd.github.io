@@ -21,6 +21,20 @@ The x86-64's [`mov`](https://c9x.me/x86/html/file_module_x86_id_176.html) instru
 
 ## Implementation
 
+MoVfuscator removes all branches and transforms a non-linear code into a linear code by:
+
+- Making **every** meta-instruction **conditional**.
+- Adding a single jump using SIGILL (that is by executing `ud2` instruction) to jump to the beginning.
+
+This certainly makes it difficult, but *not impossible*.
+
+### Signal Handlers
+
+| Signal | Purpose |
+| --- | --- |
+| SIGSEGV | Execute System Call |
+| SIGILL | Perform Jump to Initial Code |
+
 ### Addition
 
 $8$ bit addition is implemented using memory addressing. $2^n$ bit addition is implemented by splitting across $8$ bit additions and propagating the carry.
