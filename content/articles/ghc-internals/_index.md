@@ -1,3 +1,4 @@
----
-title: "GHC Internals"
----
++++
+title = "GHC Internals"
+description = "Exploring the GHC Runtime"
++++
