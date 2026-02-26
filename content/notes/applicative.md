@@ -2,6 +2,7 @@
 title = "Applicative"
 summary = "Notes on Applicative"
 date = "2026-02-26"
+math = true
 +++
 
 ## Applicative
