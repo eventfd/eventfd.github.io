@@ -18,6 +18,9 @@ Over the years, I've participated in a variety of competitions and challenges th
 - Rank 41 &mdash; [Flare-On 2022](https://flare-on.com/2022.html)
 - Rank 16 &mdash; [Flare-On 2023](https://flare-on.com/2023.html)
 
+## Talks
+-  [`Reversing Go and Rust binaries`](https://youtu.be/pDmpiv_sygA?t=4001&si=t2NYjm9YZdR4L10l) &mdash; DC9111 0x04 2021 organized by [Defcon Delhi](https://x.com/dc_9111)
+
 ## Certifications
 
 - AWS Solutions Architect Associate &mdash; 2025-2028
