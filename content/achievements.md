@@ -4,10 +4,6 @@ title = "Achievements"
 
 Over the years, I've participated in a variety of competitions and challenges that combine problem-solving, systems, and security:
 
-## Talks
-
--  [`Reversing Go and Rust binaries`](https://youtu.be/pDmpiv_sygA?t=4001&si=t2NYjm9YZdR4L10l) &mdash; DC9111 0x04 2021 organized by [Defcon Delhi](https://x.com/dc_9111)
-
 ## Competitive Exams
 - Rank 66 &mdash; Codevita 2018
 - AIR 145 &mdash; GATE CS 2021
