@@ -28,25 +28,44 @@ MoVfuscator removes all branches and transforms a non-linear code into a linear 
 
 This certainly makes it difficult, but *not impossible*.
 
-### Signal Handlers
+## Signal Handlers
 
 | Signal | Purpose |
 | --- | --- |
 | SIGSEGV | Execute System Call |
 | SIGILL | Perform Jump to Initial Code |
 
-### Addition
+## Stack
 
-$8$ bit addition is implemented using memory addressing. $2^n$ bit addition is implemented by splitting across $8$ bit additions and propagating the carry.
+Here's the memory layout of the stack. 
 
-![mov-add](./mov-add.svg)
+![stack-layout](./stack-addresses.webp#full "Stack Offsets")
 
-```asm
-mov eax, ptr
-mov eax, [eax + r1]
-mov eax, [eax + r2]
+### Theory
+
+Taking a bit deeper look, we can see the following:
+
+- The pointers differs by their addresses by $0x200064$
+- The pointers are in increasing order by a delta of $+4$
+
+That's the trick. Say, you have $p = 0x8604150$. Then we get:
+
+1. $p - 0x200064$ is the address where value $p$ itself is stored.
+2. $p - 0x200064 - 4$ is the address where the value $p-4$ is stored.
+3. $p' = MEM[p - 0x200068]$ gives the address of $p-4$
+
+![stack-arch](./stack-layout.svg)
+
+### Summary
+
+- `sub esp, 4` is implemented by
+
+```asm {title="sub esp, 4"}
+mov     esp, [esp - 0x200064 - 4]
 ```
 
-This performs addition of $R_1$ and $R_2$
+- `add esp, 4` is implemented by
 
-> Work in progress...
+```asm{title="add esp, 4"}
+mov     esp, [esp - 0x200064 + 4]
+```
