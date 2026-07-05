@@ -1,0 +1,83 @@
+title = "Suvaditya Sur"
+theme = "not-much"
+locale = "en-us"
+baseURL = "https://eventfd.github.io"
+copyright = ""
+
+[markup]
+    [markup.highlight]
+      style = 'autumn'
+    [markup.goldmark.parser.attribute]
+      block = true
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)'], ['$', '$']]
+
+
+[params]
+theme = "auto"
+palette = "eink"
+showThemeNotice = true
+showPostsSummary = true
+
+# Giscus Comment System
+[params.giscus]
+repository = "username/repository"
+repositoryId = "repositoryId"
+categoryName = "categoryName"
+categoryId = "categoryId"
+mapping = "pathname"
+theme = "preferred_color_scheme"
+language = "en"
+lazyLoading = true
+
+[params.breadcrumbs]
+enabled = true
+showCurrentPage = true
+home = "~"
+
+# Navigation
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "home"
+    title = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "posts"
+    name = "posts"
+    title = "posts"
+    url = "/posts"
+    weight = 2
+
+  [[menu.main]]
+    identifier = "about"
+    name = "about"
+    title = "About"
+    url = "/about"
+    weight = 6
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "tags"
+    title = "tags"
+    url = "/tags"
+    weight = 5
+
+  [[menu.main]]
+    identifier = "articles"
+    name = "articles"
+    title = "Articles"
+    url = "/articles"
+    weight = 3
+
+  [[menu.main]]
+    identifier = "notes"
+    name = "notes"
+    title = "Notes"
+    url = "/notes"
+    weight = 4

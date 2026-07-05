@@ -1,0 +1,27 @@
+{{- $breadcrumbs := .Site.Params.breadcrumbs -}}
+{{- $isEnabled := .Page.Params.breadcrumbs | default $breadcrumbs.enabled -}}
+
+{{- if $isEnabled -}}
+<div aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    {{- range $i, $v := .Ancestors.Reverse -}}
+        <li class="breadcrumb-item small">
+            <a href="{{ .RelPermalink }}">
+                {{- if (and (eq $i 0) (ne $breadcrumbs.home "")) -}}
+                    {{- $breadcrumbs.home -}}
+                {{- else -}}
+                    {{- .Title -}}
+                {{- end -}}
+            </a>
+        </li>
+    {{- end -}}
+
+    {{- if $breadcrumbs.showCurrentPage -}}
+        <li class="breadcrumb-item small">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+    {{- end -}}
+    </ol>
+</div>
+
+{{- end -}}
