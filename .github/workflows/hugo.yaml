@@ -18,14 +18,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GO_VERSION: 1.25.5
-      HUGO_VERSION: 0.154.2
+      GO_VERSION: 1.26.4
+      HUGO_VERSION: 0.162.1
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
           submodules: recursive
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
@@ -51,14 +51,6 @@ jobs:
       - name: Configure Git
         run: |
           git config core.quotepath false
-      - name: Cache restore
-        id: cache-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ runner.temp }}/hugo_cache
-          key: hugo-${{ github.run_id }}
-          restore-keys:
-            hugo-
       - name: Build the site
         run: |
           hugo \
@@ -66,12 +58,6 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
-      - name: Cache save
-        id: cache-save
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ runner.temp }}/hugo_cache
-          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
